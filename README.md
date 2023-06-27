@@ -1,11 +1,11 @@
 # PrintSquad API made with NestJS
-Here's the functional API and the instructions to create it from the scratch<br>
+Here's the functional API to PrintSquad Application and the instructions to create it from the scratch<br>
 
 # NestJs-Application
 
 Tutorial for a NestJs application development<br>
 
-#BASE CREATION:<br>
+# BASE CREATION:
 
 0 - Install globally: npm install -g @nestjs/cli <br>
 1 - Clone a empty repository <br>
@@ -24,6 +24,15 @@ Tutorial for a NestJs application development<br>
 11 - Create a repository folder inside entity module <br>
 12 - Create in-memory folder, inside it: users.in-memory.repository.ts <br>
 13 - In users.module.ts > Import repository in providers array <br>
-14 - fill the users.service.ts
+14 - fill the users.service.ts<br>
 
-App is now running. <br>
+# VALIDATIONS AND ERRORS HANDLING:
+
+15 - Install libraries > npm i class-validator class-transformer<br>
+16 - fill main.ts with the pipe stuff, as it is here in the repository (go look there).<br>
+17 - install: npm i bcryptjs<br>
+18 - also: npm i @types/bcryptjs -D<br>
+19 - fill create-user.dto.ts file with the informations about hashing<br>
+20 - add interceptors inside entity controllers<br>
+
+
