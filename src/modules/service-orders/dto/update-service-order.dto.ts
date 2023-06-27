@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { CreateUserDto } from './create-user.dto';
+import { CreateServiceOrderDto } from './create-service-order.dto';
 import {
   IsEmail,
   IsNotEmpty,
@@ -11,9 +11,9 @@ import {
 import { Transform } from 'class-transformer';
 import { hashSync } from 'bcryptjs';
 
-export class UpdateUserDto extends PartialType(CreateUserDto) {}
+export class UpdateServiceOrderDto extends PartialType(CreateServiceOrderDto) {}
 
-// export class UpdateUserDto {
+// export class UpdateServiceOrderDto {
 //   @ApiProperty({
 //     description: 'Nome do usuário',
 //     type: String,
