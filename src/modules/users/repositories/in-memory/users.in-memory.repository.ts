@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 
-import { CreateUserDto } from 'modules/users/dto/create-user.dto';
+import { CreateUserDto } from '../../dto/create-user.dto'; 
 import { User } from '../../entities/user.entity';
 import { UsersRepository } from '../users.repository';
-import { UpdateUserDto } from 'modules/users/dto/update-user.dto';
+import { UpdateUserDto } from '../../dto/update-user.dto'; 
 import { users } from 'src/database/db';
 
 export class UsersInMemoryRepository implements UsersRepository {

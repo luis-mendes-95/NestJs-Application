@@ -1,3 +1,6 @@
+# PrintSquad API made with NestJS
+Here's the functional API and the instructions to create it from the scratch<br>
+
 # NestJs-Application
 
 Tutorial for a NestJs application development<br>
@@ -15,7 +18,7 @@ Tutorial for a NestJs application development<br>
 
 # ADDING ENTITIES FLUX:<br>
 
-8 - Create the entities. <br>
+8 - Create the entities > nest g resource users modules <br>
 9 - Create database folder inside src, and also db.ts inside of it<br>
 10 - Inside create.user.dto fill the fields with entity info<br>
 11 - Create a repository folder inside entity module <br>
