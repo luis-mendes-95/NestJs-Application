@@ -6,10 +6,13 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   name: string;
-  phone: string;
+  
 
   @IsEmail()
   email: string;
+
+  @IsString()
+  phone: string;
 
   @IsString()
   @IsNotEmpty()

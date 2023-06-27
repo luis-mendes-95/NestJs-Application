@@ -1,0 +1,45 @@
+/* eslint-disable prettier/prettier */
+import { PrismaService } from 'src/database/prisma.service';
+import { CreateServiceOrderDto } from '../../dto/create-service-order.dto'; 
+import { UpdateServiceOrderDto } from '../../dto/update-service-order.dto'; 
+import { ServiceOrder } from '../../entities/service-order.entity'; 
+import { ServiceOrdersRepository } from '../service-orders.repository'; 
+import { Injectable } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+
+@Injectable()
+export class ServiceOrdersPrismaRepository implements ServiceOrdersRepository {
+  constructor(private prisma: PrismaService) {}
+  async create(data: CreateServiceOrderDto): Promise<ServiceOrder> {
+    const serviceOrder = new ServiceOrder();
+    Object.assign(serviceOrder, {
+      ...data,
+    });
+    const newServiceOrder = await this.prisma.serviceOrder.create({
+      data: { ...serviceOrder },
+    });
+    return plainToInstance(ServiceOrder, newServiceOrder);
+  }
+  async findAll(): Promise<ServiceOrder[]> {
+    const serviceOrders: ServiceOrder[] = await this.prisma.serviceOrder.findMany();
+    return plainToInstance(ServiceOrder, serviceOrders);
+  }
+  async findOne(id: string): Promise<ServiceOrder> {
+    const serviceOrder = await this.prisma.serviceOrder.findUnique({
+      where: { id },
+    });
+    return plainToInstance(ServiceOrder, serviceOrder);
+  }
+  async update(id: string, data: UpdateServiceOrderDto): Promise<ServiceOrder> {
+    const serviceOrder = await this.prisma.serviceOrder.update({
+        where: { id },
+        data: { ...data },
+    });
+    return plainToInstance(ServiceOrder, serviceOrder);
+  }
+  async delete(id: string): Promise<void> {
+    await this.prisma.serviceOrder.delete({
+        where: { id },
+    });
+  }
+}

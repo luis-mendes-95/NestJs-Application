@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateServiceOrderDto } from './dto/create-service-order.dto'; 
 import { UpdateServiceOrderDto } from './dto/update-service-order.dto'; 
 import { ServiceOrdersRepository } from './repositories/service-orders.repository';
@@ -17,14 +17,26 @@ export class ServiceOrdersService {
   }
 
   findOne(id: string) {
+    const findServiceOrder = this.serviceOrdersRepository.findOne(id);
+    if (!findServiceOrder) {
+      throw new NotFoundException('service order not found');
+    }
     return this.serviceOrdersRepository.findOne(id);
   }
 
   update(id: string, updateServiceOrderDto: UpdateServiceOrderDto) {
+    const findServiceOrder = this.serviceOrdersRepository.findOne(id);
+    if (!findServiceOrder) {
+      throw new NotFoundException('service order not found');
+    }
     return this.serviceOrdersRepository.update(id, updateServiceOrderDto);
   }
 
   remove(id: string) {
+    const findServiceOrder = this.serviceOrdersRepository.findOne(id);
+    if (!findServiceOrder) {
+      throw new NotFoundException('service order not found');
+    }
     return this.serviceOrdersRepository.delete(id);
   }
 }

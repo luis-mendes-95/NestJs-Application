@@ -35,4 +35,18 @@ Tutorial for a NestJs application development<br>
 19 - fill create-user.dto.ts file with the informations about hashing<br>
 20 - add interceptors inside entity controllers<br>
 
+# ADDING ORM:
+
+21 - install library: npm install @prisma/client
+22 - also: npm i prisma -D
+23 - run: npx prisma init
+24 - set the .env with database info
+25 - set the schemas.prisma
+26 - set a postgre database in localhost
+27 - run: npx prisma migrate dev
+28 - create file: prisma.service.ts inside database folder, fill it
+29 - create folder: prisma, inside each "repositories" folder.
+30 - also: inside it, create file: users.prisma.repository.ts, fill it
+
+
 

@@ -3,13 +3,15 @@ import { Module } from '@nestjs/common';
 import { ServiceOrdersController } from './service-orders.controller'; 
 import { ServiceOrdersService } from './service-orders.service'; 
 import { ServiceOrdersRepository } from './repositories/service-orders.repository';  
-import { ServiceOrdersInMemoryRepository } from './repositories/in-memory/service-orders.in-memory.repository'; 
+import { ServiceOrdersPrismaRepository } from '../service-orders/repositories/prisma/service-orders.prisma.repository';
+import { PrismaService } from 'src/database/prisma.service';
 
 @Module({
   controllers: [ServiceOrdersController],
   providers: [
     ServiceOrdersService,
-    { provide: ServiceOrdersRepository, useClass: ServiceOrdersInMemoryRepository }
+    PrismaService,
+    { provide: ServiceOrdersRepository, useClass: ServiceOrdersPrismaRepository }
   ],
 })
 
