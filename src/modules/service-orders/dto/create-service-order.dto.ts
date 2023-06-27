@@ -5,7 +5,7 @@ import { Transform } from 'class-transformer';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 // data tranfer object
-export class CreateUserDto {
+export class CreateServiceOrderDto {
   @ApiProperty({
     description: 'Nome do usuário',
     type: String,
@@ -13,23 +13,47 @@ export class CreateUserDto {
   })
   @IsString()
   @IsNotEmpty()
-  name: string;
+  date: string;
 
   @IsString()
   @IsNotEmpty()
-  phone: string;
+  client: string;
 
   @ApiProperty()
-  @IsEmail()
   @IsNotEmpty()
-  email: string;
+  product: string;
 
   @ApiProperty()
-  @IsString()
   @IsNotEmpty()
-  @MinLength(8)
-  @Transform(({ value }: { value: string }) => hashSync(value, 10), {
-    groups: ['transform'],
-  })
-  password: string;
+  printType: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  description: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  files: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  mockupImg: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  status: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  cost: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  price: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  margin: string;
+
+
 }
