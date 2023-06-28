@@ -8,6 +8,11 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ServiceOrdersInMemoryRepository implements ServiceOrdersRepository {
+
+  upload(mockup: Express.Multer.File, files: Express.Multer.File, serviceOrderId: string): Promise<ServiceOrder> {
+    throw new Error('Method not implemented.');
+  }
+  
   private database: ServiceOrder[] = [];
   create(data: CreateServiceOrderDto): ServiceOrder | Promise<ServiceOrder> {
     const newServiceOrder = new ServiceOrder();

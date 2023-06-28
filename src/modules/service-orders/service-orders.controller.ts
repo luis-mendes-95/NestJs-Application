@@ -9,12 +9,15 @@ import {
   Delete,
   HttpCode,
   UseGuards,
+  UseInterceptors,
+  UploadedFiles,
 } from '@nestjs/common';
 import { ServiceOrdersService } from './service-orders.service';
 import { CreateServiceOrderDto } from './dto/create-service-order.dto';
 import { UpdateServiceOrderDto } from './dto/update-service-order.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('serviceOrders')
 @Controller('serviceOrders')
@@ -34,6 +37,20 @@ export class ServiceOrdersController {
     return this.serviceOrdersService.findAll();
   }
 
+  @Patch('upload/:id')
+  @UseInterceptors(FileFieldsInterceptor([{ name: 'mockup', maxCount: 1 }]))
+  uploadMockup(
+    @UploadedFiles()
+    files: {
+      mockup?: Express.Multer.File[];
+    },
+    @Param('id') id: string,
+  ) {
+    const { mockup } = files;
+
+    return this.serviceOrdersService.uploadMockup(mockup[0], id);
+  }
+
   @Get(':id')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -44,7 +61,10 @@ export class ServiceOrdersController {
   @Patch(':id')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  update(@Param('id') id: string, @Body() updateServiceOrderDto: UpdateServiceOrderDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateServiceOrderDto: UpdateServiceOrderDto,
+  ) {
     return this.serviceOrdersService.update(id, updateServiceOrderDto);
   }
 

@@ -32,11 +32,9 @@ export class CreateServiceOrderDto {
   description: string;
 
   @ApiProperty()
-  @IsNotEmpty()
   files: string;
 
   @ApiProperty()
-  @IsNotEmpty()
   mockupImg: string;
 
   @ApiProperty()
