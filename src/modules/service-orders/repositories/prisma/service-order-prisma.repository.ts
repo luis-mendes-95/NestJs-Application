@@ -10,6 +10,11 @@ import { plainToInstance } from 'class-transformer';
 @Injectable()
 export class ServiceOrdersPrismaRepository implements ServiceOrdersRepository {
   constructor(private prisma: PrismaService) {}
+
+  upload(mockup: Express.Multer.File, files: Express.Multer.File, serviceOrderId: string): Promise<ServiceOrder> {
+    throw new Error('Method not implemented.');
+  }
+  
   async create(data: CreateServiceOrderDto): Promise<ServiceOrder> {
     const serviceOrder = new ServiceOrder();
     Object.assign(serviceOrder, {
