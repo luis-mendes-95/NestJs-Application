@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { compare } from 'bcryptjs';
@@ -26,6 +27,7 @@ export class AuthService {
     const user = await this.userService.findByEmail(email);
     return {
       token: this.jwtService.sign({ email }, { subject: user.id }),
+      user
     };
   }
 }
