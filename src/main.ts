@@ -6,10 +6,13 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Configurar o CORS
   app.enableCors();
+
   const config = new DocumentBuilder()
     .setTitle('PrintSquad')
-    .setDescription(' Embrace production ')
+    .setDescription('Embrace production')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
@@ -24,6 +27,8 @@ async function bootstrap() {
       transformOptions: { groups: ['transform'] },
     }),
   );
+
   await app.listen(3001);
 }
+
 bootstrap();
