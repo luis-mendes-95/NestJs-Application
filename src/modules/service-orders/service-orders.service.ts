@@ -9,6 +9,11 @@ import { UpdateServiceOrderDto } from './dto/update-service-order.dto';
 import { ServiceOrdersRepository } from './repositories/service-orders.repository';
 import { v2 as cloudinary } from 'cloudinary';
 import { unlink } from 'node:fs';
+import axios, { AxiosResponse } from 'axios';
+import { AxiosRequestConfig } from 'axios';
+import { Readable } from 'stream';
+import { streamToBuffer } from 'streamifier';
+import { promises as fs } from 'fs';
 
 @Injectable()
 export class ServiceOrdersService {
@@ -77,5 +82,37 @@ export class ServiceOrdersService {
 
     return updateServiceOrder;
   }
+
+  async uploadFiles(files: Express.Multer.File[]) {
+    const downloadLinks: string[] = [];
+  
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+  
+      const buffer = await fs.readFile(file.path);
+      const formData = new FormData();
+      formData.append('file', new Blob([buffer]), file.originalname);
+  
+      const config: AxiosRequestConfig = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+  
+      try {
+        const response = await axios.post('https://api.anonfiles.com/upload', formData, config);
+  
+        if (response.status === 200 && response.data.status === true) {
+          const downloadUrl = response.data.data.file.url.full;
+          downloadLinks.push(downloadUrl);
+        }
+      } catch (error) {
+        console.error('Error uploading files:', error);
+      }
+    }
+  
+    return downloadLinks;
+  }
+  
   
 }

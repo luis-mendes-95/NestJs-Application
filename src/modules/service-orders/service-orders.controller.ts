@@ -18,6 +18,9 @@ import { UpdateServiceOrderDto } from './dto/update-service-order.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import axios from "axios";
+import { FilesInterceptor } from '@nestjs/platform-express';
+
 
 @ApiTags('serviceOrders')
 @Controller('serviceOrders')
@@ -55,6 +58,14 @@ export class ServiceOrdersController {
     return this.serviceOrdersService.uploadMockup(mockup[0], id);
   }
 
+  //FAZ UPLOAD DE ARQUIVOS DE ORDEM DE SERVIÇO
+  @Post('upload')
+  @UseInterceptors(FilesInterceptor('files'))
+  uploadFiles(@UploadedFiles() files: Express.Multer.File[]) {
+    return this.serviceOrdersService.uploadFiles(files);
+  }
+  
+
   //RETORNA ORDEM DE SERVIÇO INDIVIDUAL
   @Get(':id')
   // @ApiBearerAuth()
@@ -82,4 +93,6 @@ export class ServiceOrdersController {
   remove(@Param('id') id: string) {
     return this.serviceOrdersService.remove(id);
   }
+
+  
 }
