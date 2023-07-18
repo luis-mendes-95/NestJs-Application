@@ -22,14 +22,17 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express';
 @ApiTags('serviceOrders')
 @Controller('serviceOrders')
 export class ServiceOrdersController {
+
   constructor(private readonly serviceOrdersService: ServiceOrdersService) {}
 
+  //CRIA UMA ORDEM DE SERVIÇO
   @Post('')
   @UseGuards(JwtAuthGuard)
   create(@Body() createServiceOrderDto: CreateServiceOrderDto) {
     return this.serviceOrdersService.create(createServiceOrderDto);
   }
 
+  //BUSCA TODAS AS ORDENS DE SERVIÇO
   @Get('')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -37,6 +40,7 @@ export class ServiceOrdersController {
     return this.serviceOrdersService.findAll();
   }
 
+  //FAZ UPLOAD DE MOCKUP DA ORDEM DE SERVIÇO
   @Patch('upload/:id')
   @UseInterceptors(FileFieldsInterceptor([{ name: 'mockup', maxCount: 1 }]))
   uploadMockup(
@@ -51,6 +55,7 @@ export class ServiceOrdersController {
     return this.serviceOrdersService.uploadMockup(mockup[0], id);
   }
 
+  //RETORNA ORDEM DE SERVIÇO INDIVIDUAL
   @Get(':id')
   // @ApiBearerAuth()
   // @UseGuards(JwtAuthGuard)
@@ -58,6 +63,7 @@ export class ServiceOrdersController {
     return this.serviceOrdersService.findOne(id);
   }
 
+  //ATUALIZA ORDEM DE SERVIÇO
   @Patch(':id')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -68,6 +74,7 @@ export class ServiceOrdersController {
     return this.serviceOrdersService.update(id, updateServiceOrderDto);
   }
 
+  //REMOVE ORDEM DE SERVIÇO
   @HttpCode(204)
   @Delete(':id')
   @ApiBearerAuth()

@@ -12,7 +12,9 @@ import { unlink } from 'node:fs';
 
 @Injectable()
 export class ServiceOrdersService {
+
   constructor(private serviceOrdersRepository: ServiceOrdersRepository) {}
+
   async create(createServiceOrderDto: CreateServiceOrderDto) {
     const serviceOrder = await this.serviceOrdersRepository.create(
       createServiceOrderDto,
@@ -61,8 +63,6 @@ export class ServiceOrdersService {
         return result;
       },
     );
-
-    console.log(uploadMockup);
 
     const updateServiceOrder = await this.serviceOrdersRepository.update(
       serviceOrderId,
