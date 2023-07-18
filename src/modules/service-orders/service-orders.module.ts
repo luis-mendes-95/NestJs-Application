@@ -19,12 +19,9 @@ import { diskStorage } from 'multer';
         },
       }),
       fileFilter: (_, file, cb) => {
-        if(file.mimetype === "image/jpeg"){
+
           cb(null, true)
-        }else {
-          cb(new BadRequestException("File Extension Not Supported!"), false);
-          
-        }
+
       }
     })
   ],
