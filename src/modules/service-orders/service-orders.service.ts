@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable prettier/prettier */
 import {
   ConflictException,
   Injectable,
@@ -13,7 +15,6 @@ import axios, { AxiosResponse } from 'axios';
 import { AxiosRequestConfig } from 'axios';
 import { Readable } from 'stream';
 import { streamToBuffer } from 'streamifier';
-import { promises as fs } from 'fs';
 
 @Injectable()
 export class ServiceOrdersService {
@@ -84,26 +85,24 @@ export class ServiceOrdersService {
   }
 
   async uploadFiles(files: Express.Multer.File[]) {
-    const downloadLinks: string[] = [];
-  
+
+    const fs = require('fs').promises;
+    
+    const downloadLinks = [];
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
   
       const buffer = await fs.readFile(file.path);
+      
       const formData = new FormData();
       formData.append('file', new Blob([buffer]), file.originalname);
   
-      const config: AxiosRequestConfig = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      };
-  
       try {
-        const response = await axios.post('https://api.anonfiles.com/upload', formData, config);
+        const response = await axios.post('https://file.io', formData);
   
-        if (response.status === 200 && response.data.status === true) {
-          const downloadUrl = response.data.data.file.url.full;
+        if (response.status === 200 && response.data.success) {
+          const downloadUrl = response.data.link;
           downloadLinks.push(downloadUrl);
         }
       } catch (error) {
